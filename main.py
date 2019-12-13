@@ -19,12 +19,59 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from scipy import sparse
 
+plt.figure(figsize=(18,18))
 G = nx.Graph()
 
 #nodes_txt = {'1', '2', '3', '4', '5', '6', '7'}
-G.add_nodes_from([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
-G.add_edges_from([(0, 1), (0, 15), (0, 20), (0, 26), (1, 2), (1, 10), (2, 3), (2, 9), (3, 4), (4, 5), (5, 6), (6, 7), (7, 8), (9, 4), (10, 11), (10, 14), (11, 12), (12, 13), (12, 9), (13, 6), (14, 12), (15, 16), (15, 18), (16, 17), (17, 4), (18, 19), (19, 12), (20, 21), (21, 22), (22, 23), (23, 24), (24, 25), (25, 10), (25, 18), (25, 2), (25, 16), (26, 27), (26, 28), (27, 19), (28, 17), (29, 22), (30, 14)])
+expid = "a2fg"
+uniform = False
+edges = list()
+nodes = set()
+color_map = dict()
 
+with open('/home/Earth/wuruchi/Documents/Personal/spectralgraph/data/graph_' + expid + '.txt', 'r') as the_file:
+    f1 = the_file.readlines()
+    for x in f1:
+        first = int(x.split(" ")[0].replace('\n',''))
+        second = int(x.split(" ")[1][:].replace('\n',''))
+        weight = int(x.split(" ")[2][:].replace('\n',''))
+        nodes.add(first)
+        nodes.add(second)
+        if first not in color_map.keys():
+            color_map[first] = "red" if weight == 1 else "blue"
+        else:
+            if color_map[first] != "blue":
+                color_map[first] = "red" if weight == 1 else "blue"
+        if second not in color_map.keys():
+            color_map[second] = "red" if weight == 1 else "blue"
+            if color_map[second] != "blue":
+                color_map[second] = "red" if weight == 1 else "blue"
+        edges.append((first, second, weight))
+
+print("Start Graph build")
+G.add_nodes_from(nodes)
+for item in edges:
+    u, v, w = item
+    w = 1 if uniform == True else w
+    w = w if w == 10 else 3
+    G.add_edge(u, v, weight=w)
+
+
+
+# G.add_edges_from(edges)
+print("Graph completed")
+
+# Testing degree
+# nodelist = G.nodes()
+# A = nx.to_scipy_sparse_matrix(G, nodelist=nodelist,
+#                                   format='csr')
+# diags = A.sum(axis=1).flatten()
+# print(diags)
+# End Testing degree
+
+
+#print(nodes)
+#print(edges)
 degree_dict = nx.degree(G)
 degree_list = [x[1] for x in degree_dict]
 # A = nx.adjacency_matrix(G)
@@ -33,23 +80,38 @@ degree_list = [x[1] for x in degree_dict]
 # print("### degree list ###")
 # print(degree_list)
 # print("#########")
+
+
+
 lap_matrix = nx.normalized_laplacian_matrix(G)
-print(lap_matrix)
-eigval, eigvec = sparse.linalg.eigsh(lap_matrix, k=7, which="SM")
+print("Finished Normalized Laplacian")
+eigval, eigvec = sparse.linalg.eigsh(lap_matrix, k=4, which="SM")
 
 # print(G.nodes)
-# print(eigval)
+print("Eigenvalues")
+print(eigval)
 # print(eigvec)
+print("Finished Eigen")
+x_coords = eigvec[:, 1]*100
+y_coords = eigvec[:, 2]*100
 
-x_coords = eigvec[:, 2]*100
-y_coords = eigvec[:, 3]*100
-
+print((x_coords))
+print((y_coords))
 node_to_xy = dict()
-for i in range(len(eigvec[:, 1])):
-    node_to_xy[i] = (x_coords[i], y_coords[i])
 
+
+with open('/home/Earth/wuruchi/Documents/Personal/spectralgraph/data/graph1-test.txt', 'w') as the_file:
+    for i in range(len(x_coords)):
+        node_to_xy[i] = (x_coords[i], y_coords[i])
+        the_file.write(str(i) + " " + str(x_coords[i]) + " " + str((y_coords[i])) + "\n")
+
+colors_list = list()
+for node in G:
+    colors_list.append(color_map[node])
+
+# print(colors_list)
 # pos = nx.spectral_layout(G, weight=2)
 
-
-nx.draw(G, pos=node_to_xy, with_labels=True)
-plt.show()
+print("About to draw")
+nx.draw(G, pos=node_to_xy, node_color = colors_list, with_labels=False, node_size=1, font_size=8, font_family='sans-serif')
+plt.savefig("mygraph_" + expid + "" + ("_nw" if uniform == True else "") + ".png", dpi=200)
