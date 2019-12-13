@@ -23,7 +23,7 @@ plt.figure(figsize=(18,18))
 G = nx.Graph()
 
 #nodes_txt = {'1', '2', '3', '4', '5', '6', '7'}
-expid = "a2fg"
+expid = "a247"
 uniform = False
 edges = list()
 nodes = set()
@@ -56,7 +56,7 @@ for item in edges:
     w = w if w == 10 else 3
     G.add_edge(u, v, weight=w)
 
-spring = nx.kamada_kawai_layout(G)
+spring = nx.spring_layout(G)
 print(spring)
 
 colors_list = list()
