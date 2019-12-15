@@ -1,0 +1,6 @@
+\beamer@sectionintoc {2}{Spectral Graph Layout}{3}{0}{1}
+\beamer@subsectionintoc {2}{1}{Theoretical details}{3}{0}{1}
+\beamer@subsectionintoc {2}{2}{Some Background}{5}{0}{1}
+\beamer@subsectionintoc {2}{3}{Drawing Using Degree-Normalized Eigenvectors}{11}{0}{1}
+\beamer@subsectionintoc {2}{4}{The algorithm}{15}{0}{1}
+\beamer@subsectionintoc {2}{5}{Results}{17}{0}{1}

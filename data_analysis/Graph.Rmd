@@ -1,0 +1,76 @@
+---
+title: "Experiments"
+author: "Wilmer"
+date: "12/15/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+```{r}
+library(igraph)
+library(ggplot2)
+library(dplyr)
+```
+
+## a1yw
+```{r}
+model1 = read.table("../data/graph_a1yw.txt", header = FALSE)
+model1_s <- model1 %>% select(V1,V2)
+G <- graph.data.frame(model1_s, directed = FALSE)
+V(G)
+E(G)
+```
+
+
+## a28o
+```{r}
+model1 = read.table("../data/graph_a28o.txt", header = FALSE)
+model1_s <- model1 %>% select(V1,V2)
+G <- graph.data.frame(model1_s, directed = FALSE)
+V(G)
+E(G)
+```
+
+
+## a2dn
+```{r}
+model1 = read.table("../data/graph_a2dn.txt", header = FALSE)
+model1_s <- model1 %>% select(V1,V2)
+G <- graph.data.frame(model1_s, directed = FALSE)
+V(G)
+E(G)
+```
+
+## Barabasi Albert data
+```{r}
+n <- 30000
+BA_model <- sample_pa(n, power = 1, m = NULL, out.dist = NULL, out.seq = NULL,
+  out.pref = FALSE, zero.appeal = 1, directed = TRUE,
+  algorithm = c("psumtree", "psumtree-multiple", "bag"),
+  start.graph = NULL)
+
+write_graph(BA_model, "/Users/BleuDChan/ReposUPC/spectralgraph/data/graph_bamodel30k.txt", format = c("edgelist"))
+
+V(BA_model)
+E(BA_model)
+
+#write( degree(BA_model) , file = "/Users/BleuDChan/ReposUPC/spectralgraph/data/bamodel30k.txt", format= c("edgelist") )
+```
+
+## Erdos Renyi
+```{r}
+n <- 30000
+ER_model <- g <- erdos.renyi.game(n, 0.001)
+
+write_graph(ER_model, "/Users/BleuDChan/ReposUPC/spectralgraph/data/graph_ermodel30k.txt", format = c("edgelist"))
+
+V(ER_model)
+E(ER_model)
+
+#write( degree(BA_model) , file = "/Users/BleuDChan/ReposUPC/spectralgraph/data/bamodel30k.txt", format= c("edgelist") )
+```
+
