@@ -45,6 +45,15 @@ V(G)
 E(G)
 ```
 
+## a2fg
+```{r}
+model1 = read.table("../data/graph_a2fg.txt", header = FALSE)
+model1_s <- model1 %>% select(V1,V2)
+G <- graph.data.frame(model1_s, directed = FALSE)
+V(G)
+E(G)
+```
+
 ## Barabasi Albert data
 ```{r}
 n <- 30000

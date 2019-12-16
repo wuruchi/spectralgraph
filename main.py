@@ -7,16 +7,19 @@ from scipy import sparse
 plt.figure(figsize=(18, 18))
 G = nx.Graph()
 
-#nodes_txt = {'1', '2', '3', '4', '5', '6', '7'}
+# Experiment id, to be replaced in the name of the input and output
 expid = "ermodel30k"
+# True if weights of all edges should be 1
 uniform = False
+# True if the data provided does not include edge weights
 no_weight = True
+
 edges = list()
 nodes = set()
 color_map = dict()
-
 start = time()
 
+# Reading source data
 with open('/Users/BleuDChan/ReposUPC/spectralgraph/data/graph_' + expid + '.txt', 'r') as the_file:
     f1 = the_file.readlines()
     for x in f1:
@@ -49,39 +52,35 @@ for item in edges:
 
 print("Graph completed")
 
-degree_dict = nx.degree(G)
-degree_list = [x[1] for x in degree_dict]
-
-
+# Compute degree normalized laplacian matrix
 lap_matrix = nx.normalized_laplacian_matrix(G)
 print("Finished Normalized Laplacian")
 eigval, eigvec = sparse.linalg.eigsh(lap_matrix, k=4, which="SM")
 
-# print(G.nodes)
+
 print("Eigenvalues")
 print(eigval)
-# print(eigvec)
+
 print("Finished Eigen")
+# Eigenvector 0 is ignored
 x_coords = eigvec[:, 1]*100
 y_coords = eigvec[:, 2]*100
 
-print((x_coords))
-print((y_coords))
 node_to_xy = dict()
 
-
+# Writing coordinates for debugging purposes
 with open('/Users/BleuDChan/ReposUPC/spectralgraph/data/graph1-test.txt', 'w') as the_file:
     for i in range(len(x_coords)):
         node_to_xy[i] = (x_coords[i], y_coords[i])
         the_file.write(
             str(i) + " " + str(x_coords[i]) + " " + str((y_coords[i])) + "\n")
 
+# Handling colors
 colors_list = list()
 for node in G:
     colors_list.append(color_map[node])
 
-# print(colors_list)
-# pos = nx.spectral_layout(G, weight=2)
+# Print time spent before drawing
 finish = time() - start
 print("Seconds " + str(finish))
 print("About to draw")

@@ -182,10 +182,17 @@ For this implementation we are using the Degree Normalized Graph Laplacian and i
 	
 Version $1$ is the drawing with uniform weight across all edges, and version $2$ is the one that considers weights for edges.
 	
-	Edge $v_i \quad v_j$ has $w_{ij} > 1$ if it is required by the experiment structure that these are grouped more closely together (set as 3 for experimentation).
+	Edge $(v_i,v_j) \in E$ has $w_{ij} > 1$ if it is required by the experiment structure that these are grouped more closely together (set as 3 for experimentation).
 }
 
 \subsection{Results}
+\frame{
+	\begin{figure}[h]
+	\caption{Experiment a1yw $|V| = 2358 \quad |E| = 7117$. Uniform weight drawing.}
+	\centering
+	\includegraphics[width=0.75\textwidth]{mygraph_a1yw_nw.png}
+	\end{figure}
+}
 \frame{
 	\begin{figure}[h]
 	\caption{Experiment a1yw $|V| = 2358 \quad |E| = 7117$. Weighted drawing.}
@@ -194,11 +201,12 @@ Version $1$ is the drawing with uniform weight across all edges, and version $2$
 	\end{figure}
 }
 
+
 \frame{
 	\begin{figure}[h]
-	\caption{Experiment a1yw $|V| = 2358 \quad |E| = 7117$. Uniform weight drawing.}
+	\caption{Experiment a28o $|V| = 1365 \quad |E| = 3775$. Uniform weight drawing.}
 	\centering
-	\includegraphics[width=0.75\textwidth]{mygraph_a1yw_nw.png}
+	\includegraphics[width=0.75\textwidth]{mygraph_a28o_nw.png}
 	\end{figure}
 }
 
@@ -210,11 +218,12 @@ Version $1$ is the drawing with uniform weight across all edges, and version $2$
 	\end{figure}
 }
 
+
 \frame{
 	\begin{figure}[h]
-	\caption{Experiment a28o $|V| = 1365 \quad |E| = 3775$. Uniform weight drawing.}
+	\caption{Experiment a2dn $|V| = 2106 \quad |E| = 3603$. Uniform weight drawing.}
 	\centering
-	\includegraphics[width=0.75\textwidth]{mygraph_a28o_nw.png}
+	\includegraphics[width=0.75\textwidth]{mygraph_a2dn_nw.png}
 	\end{figure}
 }
 
@@ -228,11 +237,14 @@ Version $1$ is the drawing with uniform weight across all edges, and version $2$
 
 \frame{
 	\begin{figure}[h]
-	\caption{Experiment a2dn $|V| = 2106 \quad |E| = 3603$. Uniform weight drawing.}
+	\caption{Experiment a2fg $|V| = 2006 \quad |E| = 3202$. Uniform weight drawing.}
 	\centering
-	\includegraphics[width=0.75\textwidth]{mygraph_a2dn_nw.png}
+	\includegraphics[width=0.75\textwidth]{mygraph_a2fg.png}
 	\end{figure}
 }
+
+
+
 
 \frame{
 	All the previous experiments were completed in under 1 second.
